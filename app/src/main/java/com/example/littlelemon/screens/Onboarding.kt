@@ -2,6 +2,7 @@ package com.example.littlelemon.screens
 
 import android.annotation.SuppressLint
 import android.util.Patterns
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -53,6 +54,9 @@ import com.example.littlelemon.utils.PreferencesManager
 
 @Composable
 fun Onboarding(navController: NavController) {
+
+    BackHandler(true) {   }
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -94,7 +98,7 @@ fun Banner() {
             .height(100.dp)
     ) {
         Text(
-            text = "Let's get to know you",
+            text = stringResource(id = R.string.get_to_know_you),
             color = colorResource(id = R.color.highlight_001),
             textAlign = TextAlign.Center,
             fontFamily = FontFamily(Font(R.font.karla_regular)),
@@ -102,7 +106,6 @@ fun Banner() {
         )
     }
 }
-
 
 fun validate(email: String): Boolean { return email.isNotEmpty()}
 
@@ -120,146 +123,190 @@ fun AddForm(navController: NavController) {
     var firstNameErrorMessage by remember { mutableStateOf("") }
     var isLastNameError by remember { mutableStateOf(false) }
     var lastNameErrorMessage by remember { mutableStateOf("") }
+    var isNotLoggedIn by remember { mutableStateOf(true) }
 
     val coroutineScope = rememberCoroutineScope()
     val sharedPreferences = PreferencesManager(LocalContext.current)
     val loggedIn: MutableState<Boolean> = mutableStateOf(sharedPreferences.getBool(IS_LOGGED_IN, false))
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 12.dp)
-    ) {
-        Text(
-            text = "Personal Information ${loggedIn.value}",
-            textAlign = TextAlign.Center,
-            fontFamily = FontFamily(Font(R.font.karla_regular)),
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
-        )
-
+    if(isNotLoggedIn) {
         Column(
-            verticalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 12.dp)
         ) {
-            Column() {
-                Text(
-                    text = "First name",
-                    fontFamily = FontFamily(Font(R.font.karla_regular)),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                OutlinedTextField(
-                    value = firstName,
-                    onValueChange = { firstName = it },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp, top = 8.dp),
-                    shape = RoundedCornerShape(9.dp),
-                    textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.onSurface)
-                )
-                if (isFirstNameError) {
-                    firstNameErrorMessage = stringResource(id = R.string.first_name_error)
+            Text(
+                text = stringResource(id = R.string.personal_details),
+                textAlign = TextAlign.Center,
+                fontFamily = FontFamily(Font(R.font.karla_regular)),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.ExtraBold,
+                modifier = Modifier.padding(vertical = 40.dp)
+            )
+
+            Column(
+                verticalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                Column() {
                     Text(
-                        text = firstNameErrorMessage,
-                        color = MaterialTheme.colorScheme.error,
-                        //style = MaterialTheme.typography.caption,
-                        modifier = Modifier.padding(start = 16.dp)
+                        text = "First name",
+                        fontFamily = FontFamily(Font(R.font.karla_regular)),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold
                     )
-                }
-            }
-            Column() {
-                Text(
-                    text = "Last name",
-                    fontFamily = FontFamily(Font(R.font.karla_regular)),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                OutlinedTextField(
-                    value = lastName,
-                    onValueChange = { lastName = it },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp, top = 8.dp),
-                    shape = RoundedCornerShape(9.dp),
-                    textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.onSurface)
-                )
-                if (isLastNameError) {
-                    lastNameErrorMessage = stringResource(id = R.string.last_name_error)
-                    Text(
-                        text = lastNameErrorMessage,
-                        color = MaterialTheme.colorScheme.error,
-                        //style = MaterialTheme.typography.caption,
-                        modifier = Modifier.padding(start = 16.dp)
+                    OutlinedTextField(
+                        value = firstName,
+                        onValueChange = { firstName = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp, top = 8.dp),
+                        shape = RoundedCornerShape(9.dp),
+                        textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.onSurface)
                     )
-                }
-            }
-            Column() {
-                Text(
-                    text = "Email",
-                    fontFamily = FontFamily(Font(R.font.karla_regular)),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-                OutlinedTextField(
-                    value = email,
-                    onValueChange = { email = it },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp, top = 8.dp),
-                    shape = RoundedCornerShape(9.dp),
-                    textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.onSurface),
-                    singleLine = true,
-                    isError = isEmailError,
-                )
-                if (isEmailError) {
-                    emailErrorMessage = if(email.isEmpty()) {
-                        stringResource(id = R.string.email_empty_error)
-                    } else{
-                        stringResource(id = R.string.email_error_message)
+                    if (isFirstNameError) {
+                        firstNameErrorMessage = stringResource(id = R.string.first_name_error)
+                        Text(
+                            text = firstNameErrorMessage,
+                            color = MaterialTheme.colorScheme.error,
+                            //style = MaterialTheme.typography.caption,
+                            modifier = Modifier.padding(start = 16.dp)
+                        )
                     }
-                    Text(
-                        text = emailErrorMessage,
-                        color = MaterialTheme.colorScheme.error,
-                        //style = MaterialTheme.typography.caption,
-                        modifier = Modifier.padding(start = 16.dp)
-                    )
                 }
+                Column() {
+                    Text(
+                        text = "Last name",
+                        fontFamily = FontFamily(Font(R.font.karla_regular)),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    OutlinedTextField(
+                        value = lastName,
+                        onValueChange = { lastName = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp, top = 8.dp),
+                        shape = RoundedCornerShape(9.dp),
+                        textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.onSurface)
+                    )
+                    if (isLastNameError) {
+                        lastNameErrorMessage = stringResource(id = R.string.last_name_error)
+                        Text(
+                            text = lastNameErrorMessage,
+                            color = MaterialTheme.colorScheme.error,
+                            //style = MaterialTheme.typography.caption,
+                            modifier = Modifier.padding(start = 16.dp)
+                        )
+                    }
+                }
+                Column() {
+                    Text(
+                        text = "Email",
+                        fontFamily = FontFamily(Font(R.font.karla_regular)),
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    OutlinedTextField(
+                        value = email,
+                        onValueChange = { email = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp, top = 8.dp),
+                        shape = RoundedCornerShape(9.dp),
+                        textStyle = LocalTextStyle.current.copy(color = MaterialTheme.colorScheme.onSurface),
+                        singleLine = true,
+                        isError = isEmailError,
+                    )
+                    if (isEmailError) {
+                        emailErrorMessage = if (email.isEmpty()) {
+                            stringResource(id = R.string.email_empty_error)
+                        } else {
+                            stringResource(id = R.string.email_error_message)
+                        }
+                        Text(
+                            text = emailErrorMessage,
+                            color = MaterialTheme.colorScheme.error,
+                            //style = MaterialTheme.typography.caption,
+                            modifier = Modifier.padding(start = 16.dp)
+                        )
+                    }
+                }
+            }
+
+            Button(
+                onClick = {
+                    isEmailError = checkEmail(email)
+                    isFirstNameError = checkName(firstName)
+                    isLastNameError = checkName(lastName)
+
+                    if (!isEmailError && !isFirstNameError && !isLastNameError) {
+                        sharedPreferences.saveData(FIRST_NAME, firstName)
+                        sharedPreferences.saveData(LAST_NAME, lastName)
+                        sharedPreferences.saveData(EMAIL, email)
+
+                        sharedPreferences.saveBool(IS_LOGGED_IN, true)
+
+                        isNotLoggedIn = false
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(
+                    colorResource(id = R.color.primary_002)
+                ),
+                shape = RoundedCornerShape(9.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 45.dp)
+            )
+
+            {
+                // Inner content including an icon and a text label
+                Text(
+                    stringResource(id = R.string.register),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily(Font(R.font.karla_regular)),
+                    color = colorResource(id = R.color.highlight_002)
+                )
             }
         }
-
-        Button(
-            onClick = {
-                isEmailError = checkEmail(email)
-
-                isFirstNameError = checkName(firstName)
-
-                isLastNameError = checkName(lastName)
-
-               if(!isEmailError && !isFirstNameError &&  !isLastNameError ) {
-                   sharedPreferences.saveData(FIRST_NAME, firstName)
-                   sharedPreferences.saveData(LAST_NAME, lastName)
-                   sharedPreferences.saveData(EMAIL, email)
-
-                   sharedPreferences.saveBool(IS_LOGGED_IN, true)
-
-                   navController.navigate(ScreenHomeRoute.route)
-               }
-            },
-            colors = ButtonDefaults.buttonColors(
-                colorResource(id = R.color.primary_002)
-            ),
-            shape = RoundedCornerShape(9.dp),
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        {
-            // Inner content including an icon and a text label
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 12.dp)
+        ) {
             Text(
-                "Register",
+                text = "${stringResource(id = R.string.congratulations)} $firstName ${stringResource(id = R.string.you_have_registered)}" ,
+                textAlign = TextAlign.Center,
                 fontFamily = FontFamily(Font(R.font.karla_regular)),
-                color = colorResource(id = R.color.highlight_002),
-                modifier = Modifier.padding(vertical = 12.dp)
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(vertical = 40.dp),
             )
+
+            Button(
+                onClick = {
+                    navController.navigate(ScreenHomeRoute.route)
+                },
+                colors = ButtonDefaults.buttonColors(
+                    colorResource(id = R.color.primary_002)
+                ),
+                shape = RoundedCornerShape(9.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 45.dp)
+            )
+
+            {
+                Text(
+                    stringResource(id = R.string.next),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily(Font(R.font.karla_regular)),
+                    color = colorResource(id = R.color.highlight_002),
+                    modifier = Modifier.padding(vertical = 12.dp)
+                )
+            }
         }
     }
 }

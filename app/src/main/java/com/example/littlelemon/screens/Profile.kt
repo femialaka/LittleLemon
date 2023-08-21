@@ -1,7 +1,6 @@
 package com.example.littlelemon.screens
 
 import android.annotation.SuppressLint
-import android.content.SharedPreferences
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,14 +16,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -33,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.littlelemon.R
-import com.example.littlelemon.navigation.ScreenHomeRoute
 import com.example.littlelemon.navigation.ScreenOnboardingRoute
 import com.example.littlelemon.utils.EMAIL
 import com.example.littlelemon.utils.FIRST_NAME
@@ -45,7 +41,6 @@ import com.example.littlelemon.utils.PreferencesManager
 fun Profile(navController: NavController) {
     Column {
         Header()
-
         ReadOnlyForm(navController)
     }
 }
@@ -65,11 +60,12 @@ fun ReadOnlyForm(navController: NavController) {
             .padding(horizontal = 12.dp)
     ) {
         Text(
-            text = "Personal Information ${loggedIn.value}",
+            text = stringResource(id = R.string.personal_details),
             textAlign = TextAlign.Center,
             fontFamily = FontFamily(Font(R.font.karla_regular)),
             fontSize = 16.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.ExtraBold,
+            modifier = Modifier.padding(vertical = 40.dp)
         )
 
         Column(
@@ -142,13 +138,17 @@ fun ReadOnlyForm(navController: NavController) {
                 colorResource(id = R.color.primary_002)
             ),
             shape = RoundedCornerShape(9.dp),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 45.dp)
         )
 
         {
             // Inner content including an icon and a text label
             Text(
-                "Log out",
+                stringResource(id = R.string.logout),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily(Font(R.font.karla_regular)),
                 color = colorResource(id = R.color.highlight_002),
                 modifier = Modifier.padding(vertical = 12.dp)

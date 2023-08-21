@@ -14,5 +14,10 @@ data class MenuItemNetwork(
     val description: String,
     val price: String,
     val image: String,
-    val category: String
-)
+    val category: String) {
+
+    fun toMenuItem(): MenuItem {
+        return MenuItem(id, title, description, price, image, category)
+    }
+}
+

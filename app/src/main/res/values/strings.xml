@@ -5,4 +5,22 @@
     <string name="email_empty_error">Please enter your email</string>
     <string name="last_name_error">Please enter your name</string>
     <string name="first_name_error">Please enter your name</string>
+    <string name="profile">profile picture</string>
+    <string name="little_lemon">Little Lemon</string>
+    <string name="chicago">Chicago</string>
+    <string name="intro">We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</string>
+    <string name="order">Order Take Away</string>
+    <string name="enter_search">Enter search phrase</string>
+    <string name="drinks">Drinks</string>
+    <string name="deserts">Deserts</string>
+    <string name="mains">Mains</string>
+    <string name="starter">Starters</string>
+    <string name="order_for_delivery">ORDER FOR DELIVERY!</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="you_have_registered">You have registered successfully!</string>
+    <string name="personal_details">Personal Information</string>
+    <string name="next">Next</string>
+    <string name="register">Register</string>
+    <string name="logout">Logout</string>
+    <string name="get_to_know_you">Let\'s get to know you</string>
 </resources>

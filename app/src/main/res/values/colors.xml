@@ -14,5 +14,6 @@
     <color name="secondary_002">#FBDABB</color>
     <color name="highlight_001">#EDEFEE</color>
     <color name="highlight_002">#333333</color>
+    <color name="divider">#B3767A78</color>
     <color name="error">#EB0606</color>
 </resources>
