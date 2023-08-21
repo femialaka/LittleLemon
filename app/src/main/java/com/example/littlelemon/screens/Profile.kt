@@ -50,9 +50,9 @@ fun Profile(navController: NavController) {
 @Composable
 fun ReadOnlyForm(navController: NavController) {
 
-    val coroutineScope = rememberCoroutineScope()
     val sharedPreferences = PreferencesManager(LocalContext.current)
-    val loggedIn: MutableState<Boolean> = mutableStateOf(sharedPreferences.getBool(IS_LOGGED_IN, false))
+    val loggedIn: MutableState<Boolean> =
+        mutableStateOf(sharedPreferences.getBool(IS_LOGGED_IN, false))
 
     Column(
         modifier = Modifier
@@ -80,7 +80,7 @@ fun ReadOnlyForm(navController: NavController) {
                 )
                 OutlinedTextField(
                     value = sharedPreferences.getData("FIRST_NAME", ""),
-                    onValueChange = {  },
+                    onValueChange = { },
                     readOnly = true,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -98,7 +98,7 @@ fun ReadOnlyForm(navController: NavController) {
                 )
                 OutlinedTextField(
                     value = sharedPreferences.getData("LAST_NAME", ""),
-                    onValueChange = {  },
+                    onValueChange = { },
                     readOnly = true,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -116,7 +116,7 @@ fun ReadOnlyForm(navController: NavController) {
                 )
                 OutlinedTextField(
                     value = sharedPreferences.getData("EMAIL", ""),
-                    onValueChange = {  },
+                    onValueChange = { },
                     readOnly = true,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -144,7 +144,6 @@ fun ReadOnlyForm(navController: NavController) {
         )
 
         {
-            // Inner content including an icon and a text label
             Text(
                 stringResource(id = R.string.logout),
                 fontSize = 16.sp,

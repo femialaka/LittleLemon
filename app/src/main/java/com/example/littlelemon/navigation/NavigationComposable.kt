@@ -1,7 +1,6 @@
 package com.example.littlelemon.navigation
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -20,19 +19,17 @@ import com.example.littlelemon.utils.PreferencesManager
 fun NavigationComposable(items: List<MenuItem>) {
     val navController = rememberNavController()
     val sharedPreferences = PreferencesManager(LocalContext.current)
-    val loggedIn: MutableState<Boolean> = mutableStateOf(sharedPreferences.getBool("IS_LOGGED_IN", false))
+    val loggedIn: MutableState<Boolean> =
+        mutableStateOf(sharedPreferences.getBool("IS_LOGGED_IN", false))
 
     NavHost(navController = navController, startDestination = ScreenOnboardingRoute.route) {
         composable(ScreenHomeRoute.route) {
             Home(navController, items)
         }
         composable(ScreenOnboardingRoute.route) {
-            if(loggedIn.value) {
-                Log.i("MSG", "LOGGED IN ===> HOME")
+            if (loggedIn.value) {
                 Home(navController, items)
-            }
-            else {
-                Log.i("MSG", "LOGGED IN ===> ONBOARDING")
+            } else {
                 Onboarding(navController)
             }
         }

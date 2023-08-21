@@ -57,18 +57,36 @@ import com.example.littlelemon.navigation.ScreenProfileRoute
 import com.example.littlelemon.utils.PreferencesManager
 
 val testItems = listOf(
-    MenuItem(0, "Cheesecake", "taste it for yourself and be delicious beyond comprehension the minute I really nice food to eat and if its nice to eat then took a bite it was delicious to taste", "14", "bruschetta", "desert"),
-    MenuItem(1, "Mushroom", "really nice food to eat and if its nice to eat then who am I to say no to another portion you just have to go and taste it for yourself and be the judge.", "4", "bruschetta", "salad"),
-    MenuItem(2, "Chocolate Ice cream", "I really nice food to eat and if its nice to eat then took a bite it was delicious to taste that is what its all about when it comes to really nice food to eat and if its nice to eat then who am I to say no to another ", "5", "bruschetta", "desert")
+    MenuItem(
+        0,
+        "Cheesecake",
+        "taste it for yourself and be delicious beyond comprehension the minute I really nice food to eat and if its nice to eat then took a bite it was delicious to taste",
+        "14",
+        "bruschetta",
+        "desert"
+    ),
+    MenuItem(
+        1,
+        "Mushroom",
+        "really nice food to eat and if its nice to eat then who am I to say no to another portion you just have to go and taste it for yourself and be the judge.",
+        "4",
+        "bruschetta",
+        "salad"
+    ),
+    MenuItem(
+        2,
+        "Chocolate Ice cream",
+        "I really nice food to eat and if its nice to eat then took a bite it was delicious to taste that is what its all about when it comes to really nice food to eat and if its nice to eat then who am I to say no to another ",
+        "5",
+        "bruschetta",
+        "desert"
+    )
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun Home(navController: NavController?, items: List<MenuItem>) {
-
-    val sharedPreferences = PreferencesManager(LocalContext.current)
-    val loggedIn: MutableState<Boolean> = mutableStateOf(sharedPreferences.getBool("IS_LOGGED_IN", false))
 
     var searchPhrase by remember { mutableStateOf("") }
     var currentCategory by remember { mutableStateOf("Starters") }
@@ -114,9 +132,11 @@ fun Home(navController: NavController?, items: List<MenuItem>) {
             )
         }
 
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(bottom = 8.dp, top = 24.dp, start = 12.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp, top = 24.dp, start = 12.dp)
+        ) {
             Text(
                 text = stringResource(id = R.string.order_for_delivery),
                 fontWeight = FontWeight.ExtraBold,
@@ -126,9 +146,11 @@ fun Home(navController: NavController?, items: List<MenuItem>) {
             //Category Buttons
             Row(modifier = Modifier.fillMaxWidth()) {
                 options.forEach { text ->
-                    Row(modifier = Modifier
-                        .padding(end = 6.dp)
-                        .weight(1f), horizontalArrangement = Arrangement.SpaceEvenly) {
+                    Row(
+                        modifier = Modifier
+                            .padding(end = 6.dp)
+                            .weight(1f), horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
                         Text(
                             text = text,
                             style = typography.bodyMedium.merge(),
@@ -161,9 +183,12 @@ fun Home(navController: NavController?, items: List<MenuItem>) {
         )
 
         //Check the Search Phrase and Category
-        if(searchPhrase.isNotBlank())
+        if (searchPhrase.isNotBlank())
             MenuItems(items.filter {
-                it.title.contains(searchPhrase, ignoreCase = true) && it.category == currentCategory.lowercase()
+                it.title.contains(
+                    searchPhrase,
+                    ignoreCase = true
+                ) && it.category == currentCategory.lowercase()
             })
         else {
             MenuItems(items.filter {
@@ -198,7 +223,6 @@ fun HomeHeader(navController: NavController?) {
             modifier = Modifier
                 .clickable {
                     navController?.navigate(ScreenProfileRoute.route)
-                    Log.i("MSG", "Navigate to Profile")
                 }
                 .height(54.dp)
                 .width(54.dp)
@@ -216,9 +240,7 @@ fun AddIntro() {
     ) {
 
         Text(
-            text = "We are a family owned Mediterranean restaurant, focused on " +
-                    "traditional recipes served with a modern twist.",
-            //modifier = Modifier.width(180.dp),
+            text = stringResource(id = R.string.intro),
             color = colorResource(id = R.color.highlight_001),
             fontSize = 13.sp,
             fontFamily = FontFamily(Font(R.font.karla_regular)),
@@ -249,7 +271,7 @@ fun AddTitle() {
             contentAlignment = Alignment.BottomStart
         ) {
             Text(
-                "Little Lemon",
+                stringResource(id = R.string.little_lemon),
                 fontSize = 64.sp,
                 fontFamily = FontFamily(Font(R.font.markazitext_variablefont_wght)),
                 color = Color.Yellow,
@@ -257,7 +279,7 @@ fun AddTitle() {
                 modifier = Modifier.padding(bottom = 18.dp)
             )
             Text(
-                "Chicago",
+                stringResource(id = R.string.chicago),
                 fontSize = 40.sp,
                 fontFamily = FontFamily(Font(R.font.markazitext_variablefont_wght)),
                 color = Color.White,
@@ -287,17 +309,38 @@ fun MenuItems(
 @Composable
 fun MenuItemDetails(menuItem: MenuItem) {
     Column(modifier = Modifier.padding(vertical = 9.dp)) {
-        Text(menuItem.title, fontWeight = FontWeight.Bold, fontSize = 14.sp, maxLines = 1, modifier = Modifier.padding(bottom = 9.dp))
+        Text(
+            menuItem.title,
+            fontWeight = FontWeight.Bold,
+            fontSize = 14.sp,
+            maxLines = 1,
+            modifier = Modifier.padding(bottom = 9.dp)
+        )
         Row() {
-            Column(modifier = Modifier
-                .weight(3f)
-                .padding(bottom = 9.dp)) {
-                Text(menuItem.description, fontSize = 12.sp, maxLines = 2, overflow = TextOverflow.Ellipsis,modifier = Modifier.padding(bottom = 9.dp))
-                Text("$${menuItem.price.toDouble()}", fontSize = 14.sp, fontWeight = FontWeight.Medium, maxLines = 1)
+            Column(
+                modifier = Modifier
+                    .weight(3f)
+                    .padding(bottom = 9.dp)
+            ) {
+                Text(
+                    menuItem.description,
+                    fontSize = 12.sp,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(bottom = 9.dp)
+                )
+                Text(
+                    "$${menuItem.price.toDouble()}",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                    maxLines = 1
+                )
             }
-            Column(modifier = Modifier
-                .weight(1f)
-                .padding(start = 12.dp)) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 12.dp)
+            ) {
                 AsyncImage(
                     model = menuItem.image,
                     contentDescription = null,
