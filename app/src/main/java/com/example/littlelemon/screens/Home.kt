@@ -212,7 +212,7 @@ fun HomeHeader(navController: NavController?) {
             contentDescription = stringResource(id = R.string.logo),
             contentScale = ContentScale.Fit,
             modifier = Modifier
-                .height(36.dp)
+                .height(54.dp)
                 .width(150.dp)
                 .weight(3f)
         )
@@ -272,11 +272,11 @@ fun AddTitle() {
         ) {
             Text(
                 stringResource(id = R.string.little_lemon),
-                fontSize = 64.sp,
+                fontSize = 54.sp,
                 fontFamily = FontFamily(Font(R.font.markazitext_variablefont_wght)),
                 color = Color.Yellow,
                 fontWeight = FontWeight.Medium,
-                modifier = Modifier.padding(bottom = 18.dp)
+                modifier = Modifier.padding(bottom = 26.dp)
             )
             Text(
                 stringResource(id = R.string.chicago),

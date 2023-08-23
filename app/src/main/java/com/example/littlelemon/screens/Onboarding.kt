@@ -80,7 +80,7 @@ fun Header() {
             contentDescription = stringResource(id = R.string.logo),
             contentScale = ContentScale.Fit,
             modifier = Modifier
-                .height(36.dp)
+                .height(54.dp)
                 .width(150.dp)
         )
     }

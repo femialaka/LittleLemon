@@ -48,7 +48,9 @@ class MainActivity : ComponentActivity() {
     }
 
     private suspend fun fetchMenu(): List<MenuItemNetwork> {
-        return client.get("https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/menu.json")
+        return client.get("https://raw.githubusercontent.com/Meta-Mobile-Developer-PC" +
+                "" +
+                "/Working-With-Data-API/main/menu.json")
             .body<MenuNetwork>().menu
     }
 
@@ -56,19 +58,4 @@ class MainActivity : ComponentActivity() {
         val menuItems = menuItemsNetwork.map { it.toMenuItem() }
         database.menuDao().insert(menuItems)
     }
-
-    /* @Composable
-     fun Hello() {
-         Text(text = "hello")
-     }*/
-
-    /* override fun onStart() {
-         super.onStart()
-
-         val isLoggedIn = "IS_LOGGED_IN"
-         val sharedPreferences = getSharedPreferences(resources.getString(R.string.app_name), MODE_PRIVATE)
-         val lastLogin = sharedPreferences.getBoolean(isLoggedIn, false)
-         Log.i(isLoggedIn, "New count: $lastLogin")
-         sharedPreferences.edit().putBoolean(isLoggedIn, lastLogin).apply()
-     }*/
 }
